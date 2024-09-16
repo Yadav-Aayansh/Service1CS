@@ -37,7 +37,7 @@ def login_redirect():
         return "Error: No token provided", 400
 
     # Set a cookie with the token
-    response = make_response(redirect(service))
+    response = make_response("Cookie setting")
     response.set_cookie(
         'auth_token',
         token,
