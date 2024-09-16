@@ -37,7 +37,7 @@ def login_redirect():
         return "Error: No token provided", 400
 
     # Set a cookie with the token
-    response = make_response("Cookie setting")
+    response = make_response(redirect('/final_redirect?service=' + service))
     response.set_cookie(
         'auth_token',
         token,
@@ -49,6 +49,15 @@ def login_redirect():
     print("Cookie set with token:", token)  # Add this debug statement
     
     return response
+
+@app.route('/final_redirect')
+def final_redirect():
+    service = request.args.get('service')
+    if not service:
+        return "Error: No service URL provided", 400
+
+    # Redirect to the service URL
+    return redirect(service)
 
 
 if __name__ == "__main__":
