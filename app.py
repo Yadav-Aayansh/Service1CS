@@ -32,14 +32,23 @@ def login_redirect():
     # Step 1: Retrieve the token from the central server redirect URL
     token = request.args.get('token')
     service = request.args.get('service')
-    
-    if token:
-        response = make_response("Cookie has been set!")
-        response.set_cookie('auth_token', token, httponly=True, secure=True, domain='service1-cs.vercel.app', samesite='None')
-        print("Cookie set with token:", token)  # Add this debug statement
-        return redirect(service)
 
-    return "Error: No token provided", 400
+    if not token:
+        return "Error: No token provided", 400
+
+    # Set a cookie with the token
+    response = make_response(redirect(service))
+    response.set_cookie(
+        'auth_token',
+        token,
+        httponly=True,
+        secure=True,
+        domain='service1-cs.vercel.app',  # Set for *.vercel.app
+        samesite='None'
+    )
+    print("Cookie set with token:", token)  # Add this debug statement
+    
+    return response
 
 
 if __name__ == "__main__":
