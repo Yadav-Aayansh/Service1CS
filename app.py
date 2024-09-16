@@ -35,7 +35,7 @@ def login_redirect():
     
     if token:
         # Step 2: Set a session cookie with the token (valid across *.vercel.app)
-        response = make_response(redirect('/dashboard'))
+        response = make_response("Cookie has been set!")
         response.set_cookie('auth_token', token, httponly=True, secure=True, domain='service1-cs.vercel.app')
         return service
 
