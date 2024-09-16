@@ -31,12 +31,13 @@ def dashboard():
 def login_redirect():
     # Step 1: Retrieve the token from the central server redirect URL
     token = request.args.get('token')
+    service = request.args.get('service')
     
     if token:
         # Step 2: Set a session cookie with the token (valid across *.vercel.app)
         response = make_response(redirect('/dashboard'))
-        response.set_cookie('auth_token', token, httponly=True, secure=True, domain='.vercel.app')
-        return response
+        response.set_cookie('auth_token', token, httponly=True, secure=True, domain='service1-cs.vercel.app')
+        return service
 
     return "Error: No token provided", 400
 
