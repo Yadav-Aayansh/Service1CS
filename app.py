@@ -34,10 +34,10 @@ def login_redirect():
     service = request.args.get('service')
     
     if token:
-        # Step 2: Set a session cookie with the token (valid across *.vercel.app)
         response = make_response("Cookie has been set!")
-        response.set_cookie('auth_token', token, httponly=True, secure=True, domain='service1-cs.vercel.app')
-        return service
+        response.set_cookie('auth_token', token, httponly=True, secure=True, domain='service1-cs.vercel.app', samesite='None')
+        print("Cookie set with token:", token)  # Add this debug statement
+    return response
 
     return "Error: No token provided", 400
 
